@@ -58,7 +58,10 @@ def login():
         resp.set_cookie("name", username, max_age=60*60)
         return resp
     
-    return "Credenciais Inválidas!"
+    return f"""
+    <p>Credenciais Inválidas!</p>
+    <a href="/login">Entrar</a>
+    """
 
 @app.route("/perfil")
 def perfil():
