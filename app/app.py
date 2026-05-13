@@ -41,6 +41,9 @@ def home():
 def save_name(name):
     resp = make_response(redirect("/"))
     resp.set_cookie("name", name, max_age=60*60)
+    if "username" in session:
+        session.clear()
+        resp.set_cookie("counter", "0", max_age=60*60)
     return resp
 
 @app.route("/login", methods=["GET"])
@@ -56,7 +59,7 @@ def login():
         session["username"] = username
         resp = make_response(redirect("/perfil"))
         resp.set_cookie("name", username, max_age=60*60)
-        resp.set_cookie("counter", "1", max_age=60*60)
+        resp.set_cookie("counter", "0", max_age=60*60)
         return resp
     
     return f"""
