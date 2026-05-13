@@ -3,12 +3,11 @@ from datetime import timedelta
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 app = Flask(__name__)
 
 app.secret_key = os.getenv("APP_SECRET_KEY")
-
-default_username = os.getenv("USERNAME")
-default_password = os.getenv("PASSWORD")
 
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30)
 
@@ -53,9 +52,11 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
 
-    if username == default_username and password == default_password:
+    if username == "admin" and password == "admin":
         session["username"] = username
-        return redirect("/perfil")
+        resp = make_response(redirect("/perfil"))
+        resp.set_cookie("name", username, max_age=60*60)
+        return resp
     
     return "Credenciais Inválidas!"
 
