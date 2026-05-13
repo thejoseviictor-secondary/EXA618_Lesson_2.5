@@ -56,7 +56,7 @@ def login():
         session["username"] = username
         resp = make_response(redirect("/perfil"))
         resp.set_cookie("name", username, max_age=60*60)
-        resp.set_cookie("counter", 1, max_age=60*60)
+        resp.set_cookie("counter", "1", max_age=60*60)
         return resp
     
     return f"""
