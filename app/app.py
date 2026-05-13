@@ -25,13 +25,22 @@ def home():
     else:
         counter = 1
 
-    resp = make_response(
-        render_template(
-            "counter.html",
-            name=name,
-            counter=counter
+    if "username" in session:
+        resp = make_response(
+            render_template(
+                "counter_logged.html",
+                name=name,
+                counter=counter
+            )
         )
-    )
+    else:
+        resp = make_response(
+            render_template(
+                "counter.html",
+                name=name,
+                counter=counter
+            )
+        )
 
     resp.set_cookie("counter", str(counter), max_age=60*60)
 
