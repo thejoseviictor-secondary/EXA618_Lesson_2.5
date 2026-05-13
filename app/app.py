@@ -90,7 +90,10 @@ def perfil():
 @app.route("/logout")
 def logout():
     session.clear()
-    return redirect("/login")
+    resp = make_response(redirect("/login"))
+    resp.set_cookie("name", ".", max_age=60*60)
+    resp.set_cookie("counter", "0", max_age=60*60)
+    return resp
 
 if __name__ == "__main__":
     app.run(host=os.getenv("HOST"), port=os.getenv("PORT"), debug=True)
